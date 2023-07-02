@@ -26,7 +26,7 @@ class User {
         state?: string,
         height?: string,
         gender?: string,
-        skills?: string[],
+        // skills?: string[],
     ) {
         this._id = id ?? randomUUID();
         this._password = password;

@@ -5,9 +5,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// add a postgress url
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = "postgres://postgres:VRfGflx8N9lGGM7F@db.ilyewqclpwggmrcgsyjl.supabase.co:5432/postgres"
+  // directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -21,12 +23,41 @@ model User {
   state    String
   height   String
   gender   String
-  skills   Skills[]
+  skills   String[]
 }
 
-model Skills {
-  id     String  @id @default(uuid())
-  skill  String
-  User   User?   @relation(fields: [userId], references: [id])
-  userId String?
+model Spot {
+  id          String   @id @default(uuid())
+  name        String
+  state       String
+  city        String
+  neiborhood  String
+  street      String
+  coordinates String[]
+  conditions  String
+  photos      String[]
+  videos      String[]
+}
+
+model Sector {
+  id          String   @id @default(uuid())
+  name        String
+  state       String
+  city        String
+  neiborhood  String
+  street      String
+  coordinates String[]
+  conditions  String
+  description String
+  photos      String[]
+  videos      String[]
+}
+
+model Route {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  betas       String[]
+  photos      String[]
+  videos      String[]
 }
