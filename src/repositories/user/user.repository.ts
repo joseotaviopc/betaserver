@@ -30,24 +30,28 @@ class UserRepository implements IUserRepository {
 
     async findAll(): Promise<IUserWithoutPassword[] | null> {
         const users = await prismaClient.user.findMany();
+        if (!users.length) return null;
 
         return users.map((user) => this.mapToDTOWithoutPassword(user));
     }
 
-    async create(user: ICreateUser): Promise<User | null> {
+    async create(user: ICreateUser): Promise<IUserDTO | null> {
         const password = await bcrypt.hash(user.password, 10);
-        console.log("password ", password);
-        console.log("user ", user);
 
         const createdUser = await prismaClient.user.create({
             data: this.prismaProvider.mapToPrisma<ICreateUser, User>({
                 ...user,
+                photo: user.photo || "",
+                city: user.city || "",
+                state: user.state || "",
+                height: user.height || "",
+                gender: user.gender || "",
+                skills: user.skills || [],
                 password: password,
             }),
         });
-        console.log("createdUser in repository ", createdUser);
 
-        return this.mapToDTO(createdUser) || null;
+        return createdUser || null;
     }
 
     async update(
@@ -67,13 +71,19 @@ class UserRepository implements IUserRepository {
         return true;
     }
 
-    private mapToDTO(user: IUserDTO): User {
+    private mapToDTO(user: ICreateUser): User {
         const newUser = new User(
             user.name,
-            user.lastName,
             user.email,
             user.password,
-            user.id || randomUUID(),
+            user.lastName,
+            randomUUID(),
+            user.photo,
+            user.city,
+            user.state,
+            user.height,
+            user.gender,
+            user.skills,
         );
         return newUser;
     }
@@ -89,19 +99,19 @@ class UserRepository implements IUserRepository {
             photo,
             state,
             gender,
-            // skills,
+            skills,
         } = user;
         return {
             name,
             email,
             id,
             lastName,
-            photo,
-            city,
-            state,
-            height,
-            gender,
-            // skills,
+            photo: photo || "",
+            city: city || "",
+            state: state || "",
+            height: height || "",
+            gender: gender || "",
+            skills: skills || [],
         };
     }
 }

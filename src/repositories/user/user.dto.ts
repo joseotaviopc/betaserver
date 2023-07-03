@@ -9,7 +9,7 @@ interface IUserDTO {
     state?: string;
     height?: string;
     gender?: string;
-    // skills?: string[];
+    skills?: string[];
 }
 
 interface ICreateUser {
@@ -17,6 +17,12 @@ interface ICreateUser {
     email: string;
     name: string;
     lastName: string;
+    photo?: string;
+    city?: string;
+    state?: string;
+    height?: string;
+    gender?: string;
+    skills?: string[];
 }
 
 type IUserWithoutPassword = Omit<IUserDTO, "password">;
