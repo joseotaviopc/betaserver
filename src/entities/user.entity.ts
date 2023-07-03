@@ -13,7 +13,7 @@ class User {
     public state: string;
     public height: string;
     public gender: string;
-    // public skills: string[];
+    public skills: string[];
 
     constructor(
         name: string,
@@ -26,7 +26,7 @@ class User {
         state?: string,
         height?: string,
         gender?: string,
-        // skills?: string[],
+        skills?: string[],
     ) {
         this._id = id ?? randomUUID();
         this._password = password;
@@ -38,7 +38,7 @@ class User {
         this.state = state || "";
         this.height = height || "";
         this.gender = gender || "";
-        // this.skills = skills || [];
+        this.skills = skills || [];
     }
 
     get id(): string {
