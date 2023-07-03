@@ -1,4 +1,3 @@
-import { User } from "@entities/user.entity";
 import { UserRepository } from "@repositories/user/user.repository";
 import { provide } from "inversify-binding-decorators";
 import { ICreateUserRequestDTO } from "./user-create.dto";
@@ -7,7 +6,6 @@ import {
     ConflictError,
     InternalServerError,
 } from "../user-errors";
-import { randomUUID } from "node:crypto";
 
 @provide(CreateUserUseCase)
 class CreateUserUseCase {
@@ -35,25 +33,20 @@ class CreateUserUseCase {
             const userExists = await this.userRepository.findByEmail(email);
             console.log("userExists ", JSON.stringify(userExists, null, 4));
             if (userExists) {
-                // console.log("Deu erro no userExists");
                 throw new ConflictError("User already exists");
             }
 
-            // Create user
-            // const newId = randomUUID();
             const newUserData = {
                 name: name,
                 email: email,
                 password: password,
                 lastName: lastName,
-                id: randomUUID(),
             };
-            console.log("newUserData ", JSON.stringify(newUserData, null, 4));
 
             const newUser = await this.userRepository.create(newUserData);
             console.log("newUser ", JSON.stringify(newUser, null, 4));
             return {
-                ...newUser,
+                user: { ...newUser },
                 message: "User created",
                 status: 201,
             };

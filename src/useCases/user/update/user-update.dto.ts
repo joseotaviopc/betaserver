@@ -9,6 +9,7 @@ interface IUserUpdateRequestDTO {
     gender?: string;
     height?: string;
     photo?: string;
+    skills?: string[];
 }
 
 interface IUserUpdateResponseDTO {

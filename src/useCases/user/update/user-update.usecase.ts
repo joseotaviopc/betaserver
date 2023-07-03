@@ -32,12 +32,12 @@ class UserUpdateUseCase {
                 name: payload.name || name,
                 email: payload.email,
                 lastName: payload.lastName || lastName,
-                city: payload.city,
-                state: payload.state,
-                gender: payload.gender,
-                height: payload.height,
-                photo: payload.photo,
-                // skills,
+                city: payload.city || undefined,
+                state: payload.state || undefined,
+                gender: payload.gender || undefined,
+                height: payload.height || undefined,
+                photo: payload.photo || undefined,
+                skills: payload.skills || [],
             });
 
             if (!updatedUser)
