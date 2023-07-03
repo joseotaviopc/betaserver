@@ -8,7 +8,7 @@ generator client {
 // add a postgress url
 datasource db {
   provider = "postgresql"
-  url      = "postgres://postgres:VRfGflx8N9lGGM7F@db.ilyewqclpwggmrcgsyjl.supabase.co:5432/postgres"
+  url      = env("DATABASE_URL")
   // directUrl = env("DIRECT_URL")
 }
 
